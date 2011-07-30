@@ -1,6 +1,7 @@
 package org.opensource.pasut.persister.mongodb;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.opensource.pasut.persister.mongodb.annotaions.Persistable;
 import org.opensource.pasut.persister.mongodb.exceptions.PersistenceException;
@@ -20,8 +21,16 @@ public class MongoPersisterService implements PersisterService {
 	
 	public <T> T insert(T object) throws Exception{
 		DBCollection collection = db.getCollection(getCollectionName(object.getClass()));
-		collection.insert(Mapper.toDbObject(object));
-		return object;
+		DBObject dbObject = Mapper.toDbObject(object);
+		if(dbObject.get("_id")==null){
+			dbObject.put("_id", UUID.randomUUID().toString());
+			collection.insert(dbObject);
+		}
+		else
+			collection.save(dbObject);
+		@SuppressWarnings("unchecked")
+		T newObject = (T)Mapper.fromDbObject(dbObject, object.getClass());
+		return newObject;
 	}
 	
 	public <T> List<T> find(Class<T> clazz)throws Exception{

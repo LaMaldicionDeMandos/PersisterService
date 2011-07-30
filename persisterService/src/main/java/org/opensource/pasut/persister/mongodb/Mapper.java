@@ -3,7 +3,6 @@ package org.opensource.pasut.persister.mongodb;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -20,9 +19,8 @@ class Mapper {
 		Map<String, Object> describe = BeanUtils.describe(value);
 		String id = (String) describe.remove("id");
 		describe.remove("class");
-		if(id == null)
-			id = UUID.randomUUID().toString();
-		describe.put("_id", id);
+		if(id != null)
+			describe.put("_id", id);
 		object.putAll(describe);
 		return object;
 	}
