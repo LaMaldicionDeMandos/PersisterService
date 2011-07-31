@@ -10,7 +10,7 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
-class QueryHelper {
+class ExampleFactory {
 	public <T> DBObject createExample(T example, Collection<String> properties){
 		return createDBObjectExample(Mapper.toDbObject(example), properties);
 	}

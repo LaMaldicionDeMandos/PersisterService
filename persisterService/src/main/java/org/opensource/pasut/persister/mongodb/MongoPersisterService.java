@@ -15,7 +15,7 @@ import com.mongodb.Mongo;
 public class MongoPersisterService implements PersisterService {
 	private Mongo mongo;
 	private DB db;
-	private QueryHelper queryHelper = new QueryHelper();
+	private ExampleFactory exampleFactory = new ExampleFactory();
 	public MongoPersisterService(String dbName, String mongoHost,int mongoPort) throws Exception{
 		mongo = new Mongo(mongoHost,mongoPort);
 		db = mongo.getDB(dbName);
@@ -43,7 +43,7 @@ public class MongoPersisterService implements PersisterService {
 	
 	public <T> List<T> find(T example,Collection<String> properties)throws Exception{
 		DBCollection collection = db.getCollection(getCollectionName(example.getClass()));
-		List<DBObject> list = collection.find(queryHelper.createExample(example,properties)).toArray();
+		List<DBObject> list = collection.find(exampleFactory.createExample(example,properties)).toArray();
 	
 		@SuppressWarnings("unchecked")
 		List<T> result = (List<T>)Mapper.fromDbObject(list, example.getClass());
