@@ -1,10 +1,10 @@
 package org.opensource.pasut.persister.mongodb;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.mongodb.BasicDBObject;
@@ -16,7 +16,7 @@ class Mapper {
 	public static <T> DBObject toDbObject(T value) throws Exception{
 		BasicDBObject object = new BasicDBObject();
 		@SuppressWarnings("unchecked")
-		Map<String, Object> describe = BeanUtils.describe(value);
+		Map<String, Object> describe = mapper.convertValue(value, HashMap.class);
 		String id = (String) describe.remove("id");
 		describe.remove("class");
 		if(id != null)
