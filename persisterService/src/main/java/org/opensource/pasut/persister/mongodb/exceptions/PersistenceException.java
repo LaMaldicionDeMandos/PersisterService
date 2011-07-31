@@ -1,6 +1,6 @@
 package org.opensource.pasut.persister.mongodb.exceptions;
 
-public class PersistenceException extends Exception {
+public class PersistenceException extends RuntimeException {
 
 	/**
 	 * 

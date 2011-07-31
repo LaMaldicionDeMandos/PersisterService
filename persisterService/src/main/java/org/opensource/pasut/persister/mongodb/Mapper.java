@@ -13,7 +13,7 @@ import com.mongodb.DBObject;
 class Mapper {
 	private static final ObjectMapper mapper = 	new ObjectMapper();
 	
-	public static <T> DBObject toDbObject(T value) throws Exception{
+	public static <T> DBObject toDbObject(T value) throws RuntimeException{
 		BasicDBObject object = new BasicDBObject();
 		@SuppressWarnings("unchecked")
 		Map<String, Object> describe = mapper.convertValue(value, HashMap.class);
