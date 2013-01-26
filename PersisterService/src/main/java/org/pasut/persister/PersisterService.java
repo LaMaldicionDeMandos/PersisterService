@@ -8,6 +8,7 @@ public interface PersisterService {
 	public <T> T update(T object);
 	
 	<T> List<T> find(T example,String[] properties);
+	<T> T findOne(T example, String[] properties);
 
 	public <T> long count(Class<T> clazz);
 	public <T> long count(T example, String[] properties);
