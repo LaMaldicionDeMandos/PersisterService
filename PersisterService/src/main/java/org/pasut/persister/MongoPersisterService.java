@@ -78,7 +78,7 @@ public class MongoPersisterService implements PersisterService {
 	public <T> T findOne(T example, String[] properties) {
 		DBCollection collection = db.getCollection(getCollectionName(example.getClass()));
 		DBObject dbObject = collection.findOne(factory.createExample(example,properties));
-
+		if(dbObject==null) return null;
 		return (T) mapper.fromDbObject(dbObject, example.getClass());
 	}
 
