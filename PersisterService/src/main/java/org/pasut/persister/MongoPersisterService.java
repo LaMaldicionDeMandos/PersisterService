@@ -3,6 +3,9 @@ package org.pasut.persister;
 import java.util.List;
 import java.util.UUID;
 
+import org.pasut.persister.operators.Operator;
+
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -80,6 +83,16 @@ public class MongoPersisterService implements PersisterService {
 		DBObject dbObject = collection.findOne(factory.createExample(example,properties));
 		if(dbObject==null) return null;
 		return (T) mapper.fromDbObject(dbObject, example.getClass());
+	}
+	public <T> List<T> find(Class<T> clazz, Operator... operators) {
+		DBCollection collection = db.getCollection(getCollectionName(clazz));
+		
+		BasicDBObjectBuilder builder = BasicDBObjectBuilder.start();
+		for(Operator operator : operators){
+			operator.perform(builder);
+		}
+		List<DBObject> list = collection.find(builder.get()).toArray();
+		return mapper.fromDbObject(list, clazz);
 	}
 
 }
