@@ -3,7 +3,7 @@ package org.pasut.persister.operators;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObjectBuilder;
 
-public class And implements Operator {
+public class And extends Operator {
 	private Operator[] operators;
 	
 	public And(Operator... operators){

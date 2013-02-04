@@ -157,6 +157,14 @@ public class OperatorsTest {
 		assertEquals(4, list.get(1).getiValue());
 	}
 	
+	@Test
+	public void testComplex(){
+		ComplexObject object = new ComplexObject("A", 5);
+		mongo.insert(object);
+		List<ComplexObject> list = mongo.find(ComplexObject.class, new Equal("object", object.getObject()));
+		assertEquals(1, list.size());
+	}
+	
 	private void insert(int count){
 		for(int i=0;i<count;i++){
 			SimpleObject object = new SimpleObject("A", i);

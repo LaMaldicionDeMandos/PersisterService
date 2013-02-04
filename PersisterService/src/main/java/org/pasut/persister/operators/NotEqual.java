@@ -4,7 +4,7 @@ import org.bson.BasicBSONObject;
 
 import com.mongodb.BasicDBObjectBuilder;
 
-public class NotEqual implements Operator {
+public class NotEqual extends Operator {
 	private final String key;
 	private final Object value;
 	
@@ -14,7 +14,7 @@ public class NotEqual implements Operator {
 	}
 	public void perform(BasicDBObjectBuilder builder) {
 		BasicBSONObject operation = new BasicBSONObject();
-		operation.put("$ne", value);
+		operation.put("$ne", wrap(value));
 		builder.append(key, operation);
 	}
 

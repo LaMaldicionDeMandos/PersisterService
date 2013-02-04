@@ -4,7 +4,7 @@ import org.bson.BasicBSONObject;
 
 import com.mongodb.BasicDBObjectBuilder;
 
-public class GreaterOrEqualThan implements Operator {
+public class GreaterOrEqualThan extends Operator {
 	private final String key;
 	private final Object value;
 	
@@ -15,7 +15,7 @@ public class GreaterOrEqualThan implements Operator {
 	
 	public void perform(BasicDBObjectBuilder builder) {
 		BasicBSONObject operation = new BasicBSONObject();
-		operation.put("$gte", value);
+		operation.put("$gte", wrap(value));
 		builder.append(key, operation);
 	}
 

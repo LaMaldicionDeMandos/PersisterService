@@ -7,7 +7,7 @@ import org.bson.BasicBSONObject;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObjectBuilder;
 
-public class All implements Operator {
+public class All extends Operator {
 	private final String key;
 	private final Object[] values;
 	
@@ -18,6 +18,9 @@ public class All implements Operator {
 	public void perform(BasicDBObjectBuilder builder) {
 		BasicBSONObject operation = new BasicBSONObject();
 		BasicDBList list = new BasicDBList();
+		for(int i=0;i<values.length;i++){
+			values[i] = wrap(values[i]);
+		}
 		list.addAll(Arrays.asList(values));
 		operation.put("$all", list);
 		builder.append(key, operation);

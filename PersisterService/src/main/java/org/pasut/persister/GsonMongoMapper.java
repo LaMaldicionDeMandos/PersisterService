@@ -3,6 +3,7 @@ package org.pasut.persister;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,12 @@ public class GsonMongoMapper extends GsonMapper implements MongoMapper {
 		if(id != null){
 			map.put("_id", id);
 		}
-		dbObject.putAll(map);
+		List<String> sorterList = new ArrayList<String>(map.keySet()); 
+		Collections.sort(sorterList);
+		for(String key : sorterList){
+			dbObject.put(key,map.get(key));
+		}
+		//dbObject.putAll(map);
 		return dbObject;
 	}
 

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.pasut.persister</groupId>
 	<artifactId>persister-service</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<packaging>jar</packaging>
 	<description>Se agregan las operaciones [all, and, equal, gte, gt, in, lte, lt, nor, ne, or]</description>
 	<properties>

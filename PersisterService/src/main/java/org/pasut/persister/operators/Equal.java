@@ -2,7 +2,7 @@ package org.pasut.persister.operators;
 
 import com.mongodb.BasicDBObjectBuilder;
 
-public class Equal implements Operator {
+public class Equal extends Operator {
 	private final String key;
 	private final Object value;
 	
@@ -11,7 +11,7 @@ public class Equal implements Operator {
 		this.value = value;
 	}
 	public void perform(BasicDBObjectBuilder builder) {
-		builder.append(key, value);
+		builder.append(key, wrap(value));
 	}
 
 }
