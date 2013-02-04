@@ -18,6 +18,7 @@ public abstract class Operator {
 	
 	protected Object wrap(Object value){
 		if(isWrapperType(value.getClass())) return value;
+		if(value.getClass().isEnum()) return value.toString();
 		return mapper.toDbObject(value);
 	}
 	
