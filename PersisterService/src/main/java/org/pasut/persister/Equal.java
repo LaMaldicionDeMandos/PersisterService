@@ -1,8 +1,8 @@
-package org.pasut.persister.operators;
+package org.pasut.persister;
 
 import com.mongodb.BasicDBObjectBuilder;
 
-public class Equal extends Operator {
+public class Equal implements Operator {
 	private final String key;
 	private final Object value;
 	
@@ -11,10 +11,7 @@ public class Equal extends Operator {
 		this.value = value;
 	}
 	public void perform(BasicDBObjectBuilder builder) {
-		if(isComplex(value))
-			build(key, value, builder);
-		else
-			builder.append(key, wrap(value));
+		builder.append(key, value);
 	}
 
 }
