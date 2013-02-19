@@ -18,12 +18,21 @@ public class In extends Operator {
 	public void perform(BasicDBObjectBuilder builder) {
 		BasicBSONObject operation = new BasicBSONObject();
 		BasicDBList list = new BasicDBList();
+		boolean areComplex = false;
 		for(int i=0;i<values.length;i++){
-			values[i] = wrap(values[i]);
+			if(isComplex(values[i])){
+				areComplex = true;
+				values[i] = getId(values[i]);
+			}else
+				values[i] = wrap(values[i]);
 		}
 		list.addAll(Arrays.asList(values));
 		operation.put("$in", list);
-		builder.append(key, operation);
+		if(areComplex){
+			builder.append(key + "._id", operation);
+		}else{
+			builder.append(key, operation);
+		}
 	}
 
 }

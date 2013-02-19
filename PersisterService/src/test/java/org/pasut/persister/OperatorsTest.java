@@ -164,6 +164,38 @@ public class OperatorsTest {
 		List<ComplexObject> list = mongo.find(ComplexObject.class, new Equal("object", object.getObject()));
 		assertEquals(1, list.size());
 	}
+
+	@Test
+	public void testComplexAll(){
+		ComplexObject object = new ComplexObject("A", 5);
+		mongo.insert(object);
+		List<ComplexObject> list = mongo.find(ComplexObject.class, new All("object", object.getObject()));
+		assertEquals(1, list.size());
+	}
+
+	@Test
+	public void testComplexIn(){
+		ComplexObject object = new ComplexObject("A", 5);
+		mongo.insert(object);
+		List<ComplexObject> list = mongo.find(ComplexObject.class, new In("object", object.getObject()));
+		assertEquals(1, list.size());
+	}
+
+	@Test
+	public void testComplexNot(){
+		ComplexObject object = new ComplexObject("A", 5);
+		mongo.insert(object);
+		List<ComplexObject> list = mongo.find(ComplexObject.class, new NotEqual("object", object.getObject()));
+		assertEquals(1, list.size());
+	}
+
+	@Test
+	public void testComplexNotIn(){
+		ComplexObject object = new ComplexObject("A", 5);
+		mongo.insert(object);
+		List<ComplexObject> list = mongo.find(ComplexObject.class, new NotIn("object", object.getObject()));
+		assertEquals(0, list.size());
+	}
 	
 	private void insert(int count){
 		for(int i=0;i<count;i++){

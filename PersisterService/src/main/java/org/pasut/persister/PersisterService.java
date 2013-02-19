@@ -13,6 +13,7 @@ public interface PersisterService {
 	<T> T findOne(T example, String[] properties);
 
 	<T> List<T> find(Class<T> clazz, Operator ... operators);
+	<T> T findOne(Class<T> clazz, Operator ... operators);
 	public <T> long count(Class<T> clazz);
 	public <T> long count(T example, String[] properties);
 

@@ -14,7 +14,10 @@ public class NotEqual extends Operator {
 	}
 	public void perform(BasicDBObjectBuilder builder) {
 		BasicBSONObject operation = new BasicBSONObject();
-		operation.put("$ne", wrap(value));
+		if(isComplex(value))
+			operation.put("$ne", build(key, value));
+		else
+			operation.put("$ne", wrap(value));
 		builder.append(key, operation);
 	}
 

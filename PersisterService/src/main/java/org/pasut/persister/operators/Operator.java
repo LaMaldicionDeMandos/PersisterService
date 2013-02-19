@@ -8,6 +8,7 @@ import java.util.Set;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.pasut.persister.GsonMongoMapper;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 
 public abstract class Operator {
@@ -19,17 +20,21 @@ public abstract class Operator {
 	protected static boolean isWrapperType(Class<?> clazz){
         return WRAPPER_TYPES.contains(clazz);
     }
-		
+	
 	@SuppressWarnings("unchecked")
-	protected void build(String key, Object value, BasicDBObjectBuilder builder) {
+	protected String getId(Object value){
 		Map<String, Object> map = mapper.convertValue(value,HashMap.class);
-		String id = (String)map.remove("id");
-		if(id != null){
-			map.put("_id", id);
-		}
-		for(String att : map.keySet()){
-			builder.append(key + "." + att, map.get(att));
-		}
+		return (String)map.remove("id");
+	}
+	
+	protected BasicDBObject build(String key, Object value){
+		BasicDBObject res = new BasicDBObject();
+		res.append(key + "._id", getId(value));
+		return res;
+	}
+		
+	protected void build(String key, Object value, BasicDBObjectBuilder builder) {
+		builder.append(key + "._id", getId(value));
 	}
 	
 	protected Object wrap(Object value){

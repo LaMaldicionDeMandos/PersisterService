@@ -86,13 +86,23 @@ public class MongoPersisterService implements PersisterService {
 	}
 	public <T> List<T> find(Class<T> clazz, Operator... operators) {
 		DBCollection collection = db.getCollection(getCollectionName(clazz));
-		
+		BasicDBObjectBuilder builder = createObjectBuilder(operators);
+		List<DBObject> list = collection.find(builder.get()).toArray();
+		return mapper.fromDbObject(list, clazz);
+	}
+	public <T> T findOne(Class<T> clazz, Operator... operators) {
+		DBCollection collection = db.getCollection(getCollectionName(clazz));
+		BasicDBObjectBuilder builder = createObjectBuilder(operators);
+		DBObject res = collection.findOne(builder.get());
+		return mapper.fromDbObject(res, clazz);
+	}
+	
+	private BasicDBObjectBuilder createObjectBuilder(Operator[] operators){
 		BasicDBObjectBuilder builder = BasicDBObjectBuilder.start();
 		for(Operator operator : operators){
 			operator.perform(builder);
 		}
-		List<DBObject> list = collection.find(builder.get()).toArray();
-		return mapper.fromDbObject(list, clazz);
+		return builder;
 	}
 
 }
