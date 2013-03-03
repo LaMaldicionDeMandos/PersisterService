@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.pasut.persister</groupId>
 	<artifactId>persister-service</artifactId>
-	<version>1.2</version>
+	<version>1.2.1</version>
 	<packaging>jar</packaging>
-	<description>Se agregan las operaciones [all, and, equal, gte, gt, in, lte, lt, nor, ne, or] + findOne</description>
+	<description>Se agregan las operaciones [Identity] te busca la identidad por su _id</description>
 	<properties>
 		<!-- encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
